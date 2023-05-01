@@ -65,8 +65,8 @@
 
             //loop to ensure colors are visibly different
             while (Math.abs( luminance(r1,g1,b1) - luminance(r2,g2,b2) ) < 30) {
-                r2 += 50;
-                if(r2 > 255) r2 -= 255;
+                g2 += 31;
+                if(g2 > 255) g2 -= 255;
             }
             color2 = RGBToHex(r2,g2,b2);
 
