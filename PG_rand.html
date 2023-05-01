@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palette Generator</title>
+    <link href="paletteGen.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id= "header">
+        <h2>Random Palette Generator</h2>
+        <select onchange="updateTable(); randPalette()" id="num-rows">
+            <option value="5" disabled selected>Rows</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+        </select>
+
+        <button onclick = "updateTable(); randPalette()" type="button" id="generate">Generate</button>
+    </div>
+
+    <table id = "colors"></table>
+      
+      
+
+    <script type="text/javascript" src="paletteGen.js"></script>
+    <script type="text/javascript">
+
+        //functions that run upon page load
+        updateTable(); randPalette();
+
+        //gets luminance from hex color
+        function hexlum(color) {
+            var [R,G,B] = hexToRGB(color);
+            return 0.2126*R + 0.7152*G + 0.0722*B;
+        }
+
+        //sorts by luminance using insertion sort
+        function lumSort(arr) {
+            for (let i = 1; i < arr.length; i++) {
+                let curr = arr[i];
+                let j = i - 1;
+                while (j >= 0 && hexlum(arr[j]) < hexlum(curr)) {
+                arr[j + 1] = arr[j];
+                j--;
+                }
+                arr[j + 1] = curr;
+            }
+            return arr;
+        }
+
+        //gets new colors for boxes and sorts by luminance
+        function randPalette(){
+            var boxes = document.getElementsByClassName("box"),
+                colors = generate(boxes.length);
+
+            lumSort(colors);
+
+            for(var i = 0; i < boxes.length; i++) {
+                boxes[i].style["background-color"] = colors[i];
+                boxes[i].querySelector("p").innerText = colors[i];
+
+                if (hexlum(colors[i]) < 160) { 
+                    boxes[i].style["color"] = "#fff"; 
+                } 
+                else {boxes[i].style["color"] = "#000";}
+            }
+        }
+
+        function hsvToHex(h, s, v) {
+            var r, g, b,
+                i = Math.floor(h * 6),
+                f = h * 6 - i,
+                p = v * (1 - s),
+                q = v * (1 - f * s),
+                t = v * (1 - (1 - f) * s);
+
+            switch (i % 6) {
+                case 0: r = v, g = t, b = p; break;
+                case 1: r = q, g = v, b = p; break;
+                case 2: r = p, g = v, b = t; break;
+                case 3: r = p, g = q, b = v; break;
+                case 4: r = t, g = p, b = v; break;
+                case 5: r = v, g = p, b = q; break;
+            }
+
+            return RGBToHex(Math.round(r * 255), Math.round(g * 255), Math.round(b * 255));
+        }
+
+        function generate(count) {
+            var palette = [];
+            const golden_ratio_conjugate = 0.618033988749895;
+            var min = 1, max = 1/count, h, s=Math.random(), v;
+            for (var i = 0; i < count; i++) {
+                h = (Math.random() + golden_ratio_conjugate) % 1;
+                v = (min + (Math.random() * max)) % 1;
+                min -= 1/count;
+                palette.push(hsvToHex(h, s, v));
+            }
+            return palette;
+        }
+
+
+
+    </script>
+
+
+</body>
+</html>
