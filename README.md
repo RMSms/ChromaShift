@@ -8,3 +8,5 @@ ChromaShift is a web-based tool that allows users to easily generate custom grad
 
 The tool displays the hex codes for each color on the screen. When clicked, the color is automatically copied, making it easy to copy and paste. Additionally, users can generate a random palette with both colors having at least a slight contrast. 
 
+# How to contribute
+Create a new issue describing what you would like to work on. By doing so, we can discuss whether the issue is worth fixing or adding.
