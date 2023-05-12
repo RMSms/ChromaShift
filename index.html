@@ -87,7 +87,7 @@
 
                 //push colors into boxes
                 boxes[i].style["background-color"] = RGBToHex(r,g,b);
-                boxes[i].querySelector("p").innerText = RGBToHex(r,g,b);
+                boxes[i].querySelector("p").innerText = textRGBToHex(r,g,b);
 
                 //make text dark or light for readability
                 if (luminance(r,g,b) < 160) boxes[i].style["color"] = "#fff";
