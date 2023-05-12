@@ -20,6 +20,11 @@ function RGBToHex(r, g, b) {
     return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
 }
 
+//converts RGB to Hex without the #
+function textRGBToHex(r, g, b) {
+    return (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
+}
+
 //returns the color's luminance
 function luminance(R, G, B) {
     return 0.2126*R + 0.7152*G + 0.0722*B;
